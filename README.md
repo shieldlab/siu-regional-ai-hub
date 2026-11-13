@@ -11,7 +11,7 @@ The hub would combine shared GPU infrastructure with ready-to-use learning and r
 
 - Dr. Abdur Rahman Bin Shahid, School of Computing
 - Dr. Khaled Mohammed Saifuddin, School of Computing
-- Dr. Chun-Hsi Huang
+- Dr. Chun-Hsi Huang, School of Computing
 - Michael A. Barkdoll, School of Computing
 
 ## Publishing with GitHub Pages
