@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Southern Illinois Regional AI Hub</title>
+<meta name="description" content="A proposed shared AI computing and learning hub hosted by the School of Computing at Southern Illinois University Carbondale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a short proposal site. Teal band for the opener, numbered sections on a reading grid, one budget bar, details live in the PDF. */
+:root{
+  --paper:#f2f5f4;
+  --surface:#ffffff;
+  --ink:#122220;
+  --muted:#51645f;
+  --line:#d2dcd9;
+  --accent:#0d4a45;
+  --accent-ink:#0d4a45;
+  --accent-soft:#e1ecea;
+  --band:#0d4a45;
+  --on-band:#eef4f2;
+  --on-band-muted:#a9c7c2;
+  --gold:#a8701a;
+  --c1:#0d4a45;--c2:#1d6b63;--c3:#3a8b82;--c4:#6aaea5;
+  --c5:#7a4f10;--c6:#a8701a;--c7:#cc9440;--c8:#e3bd7a;
+  --display:"Zilla Slab", Rockwell, "Roboto Slab", Georgia, serif;
+  --body:"Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0c1615;--surface:#122220;--ink:#e3ece9;--muted:#9db1ac;--line:#243734;
+    --accent:#2f8178;--accent-ink:#7fcbc1;--accent-soft:#16302c;
+    --band:#0a3330;--on-band:#e3ece9;--on-band-muted:#8fb5ae;--gold:#e0a84f;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0c1615;--surface:#122220;--ink:#e3ece9;--muted:#9db1ac;--line:#243734;
+  --accent:#2f8178;--accent-ink:#7fcbc1;--accent-soft:#16302c;
+  --band:#0a3330;--on-band:#e3ece9;--on-band-muted:#8fb5ae;--gold:#e0a84f;
+  color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--accent-ink);text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+@media (max-width:480px){.wrap{padding:0 16px}}
+
+/* Top bar + nav */
+.mast{background:var(--band);color:var(--on-band)}
+.mast-top{display:flex;justify-content:space-between;gap:16px;padding:12px 0;font-size:.82rem;color:var(--on-band-muted);border-bottom:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.mast-top strong{color:var(--on-band);font-weight:600}
+.navbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.navbar .wrap{display:flex;align-items:center;gap:20px}
+.brand{font-family:var(--display);font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap;padding:14px 0}
+.brand span{color:var(--accent-ink)}
+.navlinks{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;padding:16px 10px;white-space:nowrap;border-bottom:3px solid transparent}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a.on{color:var(--accent-ink);border-bottom-color:var(--accent-ink)}
+@media (max-width:760px){.brand{display:none}.navlinks{margin-left:0}}
+
+/* Hero */
+.hero{padding:56px 0 60px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:56px;align-items:center}
+@media (max-width:880px){.hero{grid-template-columns:1fr;gap:32px}}
+.eyebrow{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--on-band-muted)}
+.hero h1{font-size:clamp(2.5rem,5.6vw,4.3rem);font-weight:700;margin:14px 0 16px;line-height:1.03}
+.hero h1 em{font-style:normal;color:#f0c27a}
+.lede{font-size:1.12rem;max-width:52ch}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.95rem;text-decoration:none;padding:12px 18px;border-radius:4px;border:1.5px solid transparent;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-solid{background:#f0c27a;color:#1d1a12}
+.btn-ghost{border-color:rgba(255,255,255,.4);color:var(--on-band)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.spec{border:1px solid rgba(255,255,255,.18);border-radius:6px;background:rgba(0,0,0,.14)}
+.spec-head{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.14);font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--on-band-muted)}
+.spec dl{margin:0}
+.spec dl>div{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.spec dl>div:last-child{border-bottom:0}
+.spec dd{margin:0;font-family:var(--display);font-weight:700;font-size:1.8rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.spec dd small{font-family:var(--body);font-size:.85rem;font-weight:500;color:var(--on-band-muted)}
+.spec dt{order:2;text-align:right;font-size:.85rem;color:var(--on-band-muted);max-width:22ch}
+
+/* Sections */
+section.block{padding:76px 0;border-bottom:1px solid var(--line)}
+section.block.alt{background:var(--surface)}
+.sec-head{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;margin-bottom:36px}
+@media (max-width:720px){.sec-head{grid-template-columns:1fr;gap:8px}}
+.sec-num{font-family:var(--mono);font-size:.8rem;color:var(--gold);letter-spacing:.06em;padding-top:12px;border-top:2px solid var(--gold);max-width:120px;line-height:1.5;align-self:start}
+.intro{margin-top:12px;max-width:66ch;color:var(--muted);font-size:1.05rem}
+.indent{margin-left:144px}
+@media (max-width:720px){.indent{margin-left:0}}
+
+.figure{margin:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+
+.doc{display:flex;align-items:center;gap:18px;margin-top:28px;padding:16px 20px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:6px;background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color .15s ease,transform .15s ease}
+.doc:hover{border-color:var(--accent);transform:translateY(-1px)}
+.doc-ic{flex:none;width:42px;height:52px;border-radius:3px;background:var(--gold);color:#fff;display:grid;place-items:center;font:600 .72rem var(--mono)}
+.doc strong{display:block;font-family:var(--display);font-size:1.12rem}
+.doc-meta{display:block;font-size:.88rem;color:var(--muted)}
+.doc-go{margin-left:auto;font-weight:600;color:var(--accent-ink);white-space:nowrap}
+@media (max-width:520px){.doc-go{display:none}}
+
+/* Card grids */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:580px){.grid3{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:6px;padding:22px;background:var(--surface);display:grid;gap:8px;align-content:start}
+section.alt .card{background:var(--paper)}
+.card p{font-size:.95rem;color:var(--muted)}
+.card .n{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1;color:var(--gold)}
+.card .who{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+.need article{border-top:3px solid var(--accent);padding-top:16px;display:grid;gap:8px;align-content:start}
+.need p{color:var(--muted);font-size:.97rem}
+
+/* Plan */
+.phases{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));counter-reset:ph;margin:0 0 44px;padding:0}
+@media (max-width:820px){.phases{grid-template-columns:1fr}}
+.phases li{list-style:none;position:relative;padding:28px 16px 0 0;font-weight:600;font-family:var(--display);font-size:1.05rem}
+.phases li::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.phases li::after{counter-increment:ph;content:counter(ph);position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font:600 .7rem/20px var(--mono);text-align:center}
+@media (max-width:820px){.phases li{padding:0 0 18px 36px}.phases li::before{left:9px;right:auto;top:20px;bottom:0;width:2px;height:auto}}
+.cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline;margin-bottom:14px}
+.cap p{font-size:.88rem;color:var(--muted)}
+.phases li p{font-family:var(--body);font-weight:400;font-size:.88rem;color:var(--muted);margin-top:6px;line-height:1.5}
+.tnote{margin-top:12px;font-size:.88rem;color:var(--muted)}
+.targets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow:hidden}
+@media (max-width:880px){.targets{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.targets>div{padding:20px;border-right:1px solid var(--line)}
+.targets>div:last-child{border-right:0}
+@media (max-width:880px){.targets>div{border-bottom:1px solid var(--line)}.targets>div:nth-child(2n){border-right:0}}
+.targets b{display:block;font-family:var(--display);font-size:2.4rem;line-height:1;color:var(--accent-ink);font-variant-numeric:tabular-nums}
+.targets span{display:block;margin-top:8px;font-size:.9rem;color:var(--muted)}
+.plan-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:36px}
+@media (max-width:820px){.plan-notes{grid-template-columns:1fr}}
+.plan-notes p{font-size:.95rem;color:var(--muted)}
+.plan-notes h3{margin-bottom:6px}
+
+/* Budget */
+.bar{display:flex;height:44px;border-radius:4px;overflow:hidden;gap:2px;margin-bottom:10px}
+.bar span{display:block;height:100%}
+.bar-key{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:28px;flex-wrap:wrap;gap:8px}
+.bar-key b{color:var(--ink)}
+.btable{width:100%;border-collapse:collapse;font-size:.96rem}
+.btable td,.btable th{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left}
+.btable th{font-size:.74rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.btable .amt{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.btable .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:10px;vertical-align:-1px}
+.btable tr.sub td{font-weight:600;background:var(--accent-soft)}
+.btable tr.total td{font-weight:700;font-size:1.05rem;border-top:2px solid var(--ink);border-bottom:3px double var(--ink)}
+.bnote{margin-top:18px;font-size:.9rem;color:var(--muted)}
+
+/* Support summary */
+.support{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media (max-width:820px){.support{grid-template-columns:1fr}}
+.counts{display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 4px}
+.counts div b{display:block;font-family:var(--display);font-size:2rem;line-height:1;color:var(--accent-ink)}
+.counts div span{font-size:.82rem;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chips span{font-size:.82rem;padding:5px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.more{font-size:.9rem;font-weight:600;margin-top:6px}
+
+/* Team */
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:960px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.team{grid-template-columns:1fr}}
+.team .init{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700;margin-bottom:8px}
+.team .aff{font-size:.88rem;color:var(--muted)}
+.team a{font-size:.8rem;font-family:var(--mono);overflow-wrap:anywhere}
+
+footer{background:var(--band);color:var(--on-band-muted);padding:36px 0;font-size:.88rem}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+footer strong{color:var(--on-band);font-family:var(--display);font-size:1.1rem}
+footer a{color:var(--on-band)}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap mast-top">
+    <span><strong>Southern Illinois University Carbondale</strong> &nbsp;·&nbsp; School of Computing</span>
+    <span>Federal project proposal</span>
+  </div>
+</header>
+
+<nav class="navbar" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">SI Regional <span>AI Hub</span></a>
+    <div class="navlinks" id="navlinks">
+      <a href="#summary">Summary</a>
+      <a href="#need">Need</a>
+      <a href="#build">Deliverables</a>
+      <a href="#beneficiaries">Beneficiaries</a>
+      <a href="#plan">Plan</a>
+      <a href="#budget">Budget</a>
+      <a href="#support">Courses &amp; research</a>
+      <a href="#team">Team</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+<div class="mast">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow">Hosted by the School of Computing · SIU Carbondale</div>
+      <h1>Southern Illinois Regional <em>AI&nbsp;Hub</em></h1>
+      <p class="lede">Shared GPU computing, ready-to-use learning environments, and hands-on support for SIU, K–12 schools, community colleges, and community partners across southern Illinois.</p>
+      <div class="cta">
+        <a class="btn btn-solid" href="assets/SIU-Regional-AI-Hub-Proposal.pdf" target="_blank" rel="noopener">Full proposal (PDF) ↗</a>
+        <a class="btn btn-ghost" href="#budget">View the budget</a>
+      </div>
+    </div>
+    <aside class="spec" aria-label="Key figures">
+      <div class="spec-head">Reference configuration</div>
+      <dl>
+        <div><dd>~32 <small>GPUs</small></dd><dt>Four eight-GPU enterprise servers</dt></div>
+        <div><dd>~250 <small>TB</small></dd><dt>Usable high-performance storage</dt></div>
+        <div><dd>400 <small>Gb/s</small></dd><dt>Cluster fabric and campus connectivity</dt></div>
+      </dl>
+    </aside>
+  </div>
+</div>
+
+<!-- Summary -->
+<section class="block" id="summary">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">01 · SUMMARY</div>
+      <div>
+        <h2>Project summary</h2>
+        <p class="intro">SIUC seeks federal support to create a regional AI hub that combines shared GPU computing with prepared environments, guided activities, and technical support. Users can move from introductory AI literacy to model development and advanced research, and connect to national resources as their needs grow.</p>
+      </div>
+    </div>
+    <div class="indent">
+      <figure class="figure">
+        <img src="assets/hub-overview.jpg" width="1443" height="812" alt="Overview graphic: why the hub is needed, what will be built, and who will benefit.">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Need -->
+<section class="block alt" id="need">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">02 · NEED</div>
+      <div><h2>Why a regional hub</h2></div>
+    </div>
+    <div class="grid3 need indent">
+      <article><h3>National resources take planning</h3><p>NAIRR, ACCESS, and NCSA require eligibility checks, allocation requests, and onboarding, with varying timelines.</p></article>
+      <article><h3>Classes need reliable access</h3><p>Outages on NAIRR-supported platforms have disrupted SIUC classes. Local control lets us schedule around teaching.</p></article>
+      <article><h3>Users need ongoing support</h3><p>Schools and colleges need guided learning, educator training, and environments they can return to each term.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- Build -->
+<section class="block" id="build">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">03 · ACTIVITIES</div>
+      <div>
+        <h2>Activities and deliverables</h2>
+        <p class="intro">Six connected components, from the hardware in the data center to the people who help users succeed.</p>
+      </div>
+    </div>
+    <div class="grid3 indent">
+      <article class="card"><span class="n">1</span><h3>Shared computing and supporting infrastructure</h3><p>Acquire and install GPU servers, supporting CPU and memory capacity, research storage, backup systems, networking, and management servers. Complete electrical, cooling, and rack improvements identified through a site assessment. Support model training, fine-tuning, inference, data preparation, simulation, and isolated virtual laboratories according to workload needs.</p></article>
+      <article class="card"><span class="n">2</span><h3>Regional access portal</h3><p>Develop a browser-accessible entry point where campus and regional users can select activities, launch workspaces, reserve sessions, and obtain help. Provide accounts, scheduling, and resource quotas to manage capacity across School of Computing, campus, and regional uses.</p></article>
+      <article class="card"><span class="n">3</span><h3>Ready-to-use learning and research environments</h3><p>Prepare reusable workspaces with software, models, datasets, instructions, and exercises already configured. Offer no-code demonstrations for beginners, interactive notebooks for learners developing programming skills, and configurable environments for advanced users. Enable users to save work and reset activities.</p></article>
+      <article class="card"><span class="n">4</span><h3>Guided activities and educator materials</h3><p>Develop self-paced and facilitated sessions on AI fundamentals, responsible use, data analysis, model behavior, and application development. Provide instructor guides, lesson plans, and assessment activities. Learners could change training examples and compare model performance or examine errors in AI-generated responses.</p></article>
+      <article class="card"><span class="n">5</span><h3>Research services and specialized laboratories</h3><p>Provide locally hosted AI services and controlled environments for advanced model evaluation, agent experimentation, and cybersecurity research. Separate experimental workloads from production systems and general learning sessions. Support reproducible project workspaces and secure management of approved research data.</p></article>
+      <article class="card"><span class="n">6</span><h3>Regional delivery and user support</h3><p>Support technical administration, instructional development, educator training, and partner coordination during implementation. Offer remote and on-campus sessions, onboarding assistance, and opportunities for teachers and community college instructors to reuse activities with their own classes.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- Beneficiaries -->
+<section class="block alt" id="beneficiaries">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">04 · USERS</div>
+      <div>
+        <h2>Beneficiaries</h2>
+        <p class="intro">From first-year students to doctoral researchers, and from K–12 classrooms to regional employers.</p>
+      </div>
+    </div>
+    <div class="grid3 indent">
+      <article class="card"><span class="who">Primary users</span><h3>School of Computing students</h3><p>Students in Artificial Intelligence+, Computer Science, Information Technology, Cybersecurity Technology, and related graduate and certificate programs would be major users. The hub would support coursework, capstones, and research from undergraduate through doctoral study. Students would gain practical experience developing AI applications, evaluating models, analyzing data, and securing computing systems without needing to own powerful computers.</p><a class="more" href="#support">Course mapping: Appendix A →</a></article>
+      <article class="card"><span class="who">Campus-wide</span><h3>Researchers and other campus users</h3><p>Faculty, staff, and students across SIUC could request access for research, teaching, professional learning, and approved applied projects. School of Computing research would include trustworthy AI, computer vision, medical imaging, bioinformatics, spatial intelligence, and cybersecurity. Other units could use the hub for discipline-specific data analysis and AI applications, including agriculture, engineering, environmental science, and computational humanities. Shared workspaces would support theses, dissertations, reproducible studies, and interdisciplinary collaboration.</p><a class="more" href="#support">Research mapping: Appendix B →</a></article>
+      <article class="card"><span class="who">Campus &amp; region</span><h3>Educators across campus and the region</h3><p>SIUC instructors, K–12 teachers, and community college educators would receive ready-to-teach activities, configured software, instructor guides, and assistance. Guided sessions and educator training would help them adapt and reuse materials independently. This support would reduce technical setup demands and extend AI learning into computing courses and other subjects.</p></article>
+      <article class="card"><span class="who">Schools</span><h3>K–12 learners</h3><p>Students in southern Illinois schools would participate in age-appropriate, educator-supervised activities using prepared datasets and controlled environments. Exercises would introduce how AI learns, why it makes mistakes, and how to evaluate its outputs responsibly. Remote sessions and teacher-led classroom use would broaden participation and introduce pathways into computing and other STEM fields.</p></article>
+      <article class="card"><span class="who">Colleges</span><h3>Community college students and adult learners</h3><p>Regional community colleges could use the hub for introductory AI instruction, applied technical courses, and workforce training. Guided labs and advanced workspaces would accommodate different levels of programming experience. Reusable materials and coordination with SIUC could support transfer preparation and continuing education through partner arrangements.</p></article>
+      <article class="card"><span class="who">Regional economy</span><h3>Community partners and regional employers</h3><p>Businesses, nonprofits, public agencies, and other community organizations could explore practical AI applications through demonstrations, workshops, and supervised projects. Participants would assess usefulness and limitations before broader adoption. Employers would benefit from graduates with practical AI skills, while partner projects would connect regional needs with student learning and faculty expertise.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- Plan -->
+<section class="block" id="plan">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">05 · PLAN</div>
+      <div>
+        <h2>Implementation and sustainability</h2>
+        <p class="intro">Implementation would begin with facility and workload assessments, partner consultation, and service planning, followed by installation, environment development, pilot use, and expansion.</p>
+      </div>
+    </div>
+    <div class="indent">
+      <ol class="phases">
+        <li>Assess &amp; plan<p>Facility and workload assessments, partner consultation, and service planning.</p></li>
+        <li>Install<p>GPU servers, storage, networking, and the electrical, cooling, and rack improvements identified in the site assessment.</p></li>
+        <li>Build environments<p>Prepared workspaces with software, models, datasets, exercises, and instructor materials.</p></li>
+        <li>Pilot<p>Initial pilots selected with instructors and research teams based on readiness and available capacity.</p></li>
+        <li>Expand<p>Broader adoption drawing on the course and research mappings in Appendices A and B.</p></li>
+      </ol>
+      <div class="cap"><h3>Proposed targets for the first full year of operation</h3><p>To be refined with partners and staffing plans</p></div>
+      <div class="targets">
+        <div><b>12</b><span>Reusable activities</span></div>
+        <div><b>6</b><span>School of Computing courses using the hub</span></div>
+        <div><b>8</b><span>Faculty-led research projects</span></div>
+        <div><b>8</b><span>Guided regional sessions</span></div>
+        <div><b>4+</b><span>Partner organizations involved in regional sessions</span></div>
+      </div>
+      <p class="tnote">The course and research mappings in Appendices A and B provide a broader pool for phased adoption.</p>
+      <div class="plan-notes">
+        <div><h3>Governance and access</h3><p>The School of Computing would coordinate the hub with campus IT, facilities, research administration, participating academic units, and regional partner representatives. Service policies would define responsibilities, project eligibility, data handling, and capacity allocations. Scheduled teaching capacity would be planned alongside research and regional use. Regional participants would join through institutional onboarding or organized cohorts, with K–12 participation coordinated through educators.</p></div>
+        <div><h3>Evaluation</h3><p>Evaluation would track campus and regional participation, repeat use, course and research adoption, learning outcomes, project completion, service reliability, and resource utilization. User and partner feedback would guide improvements to activities and support.</p></div>
+        <div><h3>Sustainability</h3><p>Before full operation, the hub would establish a plan for continuing staffing, maintenance, partner support, and equipment renewal. Coordinated purchasing, reusable content, and monitoring of energy consumption and demand would support responsible resource use. Future SIU System participation could be developed through shared activities and access agreements.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Budget -->
+<section class="block alt" id="budget">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">06 · BUDGET</div>
+      <div><h2>Budget</h2><p class="intro">One-time acquisition and installation costs.</p></div>
+    </div>
+    <div class="indent">
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <div class="bar-key"><span><b>Computing equipment</b> · 79%</span><span><b>Data center &amp; connectivity</b> · 21%</span></div>
+      <table class="btable">
+        <thead><tr><th scope="col">Category</th><th scope="col" class="amt">Amount</th></tr></thead>
+        <tbody id="bbody"></tbody>
+      </table>
+      <p class="bnote">Final configurations depend on competitive quotes. Recurring staffing and operations are funded separately. Full justification is in the <a href="assets/SIU-Regional-AI-Hub-Proposal.pdf" target="_blank" rel="noopener">proposal PDF</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Courses & research -->
+<section class="block" id="support">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">07 · USE</div>
+      <div><h2>Course and research support</h2></div>
+    </div>
+    <div class="support indent">
+      <article class="card">
+        <span class="who">Appendix A</span>
+        <h3>Course entries mapped</h3>
+        <div class="counts">
+          <div><b>11</b><span>AI+</span></div>
+          <div><b>23</b><span>Computer Science</span></div>
+          <div><b>10</b><span>IT</span></div>
+          <div><b>5</b><span>Cybersecurity</span></div>
+        </div>
+        <div class="chips"><span>Large language models</span><span>Computer vision</span><span>NLP</span><span>Ethical hacking</span><span>Digital forensics</span><span>Cloud computing</span><span>DevOps</span><span>Data analytics</span></div>
+        <a class="more" href="assets/SIU-Regional-AI-Hub-Proposal.pdf" target="_blank" rel="noopener">See the full course mapping in the PDF ↗</a>
+      </article>
+      <article class="card">
+        <span class="who">Appendix B</span>
+        <h3>Research areas mapped</h3>
+        <div class="counts">
+          <div><b>11</b><span>School of Computing</span></div>
+          <div><b>11</b><span>Campus-wide</span></div>
+        </div>
+        <div class="chips"><span>Trustworthy AI</span><span>Medical imaging</span><span>AI security</span><span>Geospatial AI</span><span>Precision agriculture</span><span>Edge AI</span><span>Computational humanities</span><span>Wildlife ecology</span></div>
+        <a class="more" href="assets/SIU-Regional-AI-Hub-Proposal.pdf" target="_blank" rel="noopener">See the full research mapping in the PDF ↗</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="block alt" id="team">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">TEAM</div>
+      <div><h2>Project team</h2></div>
+    </div>
+    <div class="team indent">
+      <article class="card"><div class="init">AS</div><h3>Dr. Abdur Rahman Bin Shahid</h3><span class="aff">School of Computing</span><a href="mailto:shahid@cs.siu.edu">shahid@cs.siu.edu</a></article>
+      <article class="card"><div class="init">KS</div><h3>Dr. Khaled Mohammed Saifuddin</h3><span class="aff">School of Computing</span><a href="mailto:k.saifuddin@siu.edu">k.saifuddin@siu.edu</a></article>
+      <article class="card"><div class="init">CH</div><h3>Dr. Chun-Hsi Huang</h3><span class="aff">SIU Carbondale</span><a href="mailto:chunhsi.huang@siu.edu">chunhsi.huang@siu.edu</a></article>
+      <article class="card"><div class="init">MB</div><h3>Michael A. Barkdoll</h3><span class="aff">School of Computing</span><a href="mailto:mabarkdoll@siu.edu">mabarkdoll@siu.edu</a></article>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><strong>Southern Illinois Regional AI Hub</strong><br>School of Computing · Southern Illinois University Carbondale</div>
+    <div>Practical AI education · Stronger research · Regional opportunity<br><a href="assets/SIU-Regional-AI-Hub-Proposal.pdf" target="_blank" rel="noopener">Download the full proposal (PDF)</a></div>
+  </div>
+</footer>
+
+<script>
+const budget = [
+  ["Computing equipment","AI and GPU compute systems",1580000,"--c1"],
+  ["Computing equipment","High-speed cluster networking",300000,"--c2"],
+  ["Computing equipment","High-performance shared storage",400000,"--c3"],
+  ["Computing equipment","Cluster management and supporting servers",100000,"--c4"],
+  ["Data center and connectivity","Power improvements",200000,"--c5"],
+  ["Data center and connectivity","Cooling improvements",55000,"--c6"],
+  ["Data center and connectivity","Cable plant upgrade for 400 Gb connectivity",165000,"--c7"],
+  ["Data center and connectivity","Research network development and implementation",200000,"--c8"]
+];
+const fmt = n => "$" + n.toLocaleString("en-US");
+(function(){
+  const total = budget.reduce((s,b)=>s+b[2],0);
+  const bar = document.getElementById("bar"), body = document.getElementById("bbody");
+  let html="", grp=null, sub=0;
+  const flush=()=>{ if(grp) html+=`<tr class="sub"><td>${grp} subtotal</td><td class="amt">${fmt(sub)}</td></tr>`; };
+  budget.forEach(([g,name,amt,c])=>{
+    if(g!==grp){ flush(); grp=g; sub=0; }
+    sub+=amt;
+    html+=`<tr><td><span class="sw" style="background:var(${c})"></span>${name}</td><td class="amt">${fmt(amt)}</td></tr>`;
+    const s=document.createElement("span"); s.style.flex=`${amt} 1 0`; s.style.background=`var(${c})`; s.title=`${name}: ${fmt(amt)}`; bar.appendChild(s);
+  });
+  flush();
+  html+=`<tr class="total"><td>Total</td><td class="amt">${fmt(total)}</td></tr>`;
+  body.innerHTML=html;
+})();
+(function(){
+  const links=[...document.querySelectorAll("#navlinks a")];
+  const map=new Map(links.map(a=>[a.getAttribute("href").slice(1),a]));
+  if(!("IntersectionObserver" in window)) return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    links.forEach(l=>l.classList.remove("on"));
+    const a=map.get(e.target.id); if(!a) return; a.classList.add("on");
+    const nav=a.parentElement, l=a.offsetLeft-nav.offsetLeft;
+    if(l<nav.scrollLeft||l+a.offsetWidth>nav.scrollLeft+nav.clientWidth) nav.scrollLeft=l-24;
+  }),{rootMargin:"-45% 0px -50% 0px"});
+  map.forEach((a,id)=>{const s=document.getElementById(id); if(s) io.observe(s);});
+})();
+</script>
+</body>
+</html>
